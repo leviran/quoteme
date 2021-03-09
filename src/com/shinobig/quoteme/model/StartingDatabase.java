@@ -1,80 +1,76 @@
 package com.shinobig.quoteme.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import org.sqlite.JDBC;
+
+import com.shinobig.quoteme.Quote;
+import com.shinobig.quoteme.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+
+import java.util.List;
 
 public class StartingDatabase {
 
-  private Connection conn;
-  private String dbName;
+  private List<User> allUsers;
 
-  public StartingDatabase(){
-    open();
-  }
+  public StartingDatabase() {
 
-  public StartingDatabase(String dbName) {
-    this.dbName = dbName;
-    open();
-  }
+    SessionFactory factory = new Configuration()
+        .configure("hibernate.cfg.xml")
+        .addAnnotatedClass(User.class)
+        .addAnnotatedClass(Quote.class)
+        .buildSessionFactory();
 
-  public boolean open(){
+    Session session = factory.getCurrentSession();
+
+
     try {
-      Class.forName("org.sqlite.JDBC");
-      conn = DriverManager.getConnection(dbName);
-      System.out.println("Successfully connected to DB");
-
-
-      Statement statement = conn.createStatement();
-//      statement.execute("CREATE TABLE users (_id INTEGER, username STRING, password STRING)");
-//      statement.execute("CREATE TABLE quotes (_id INTEGER, userid INTEGER, category STRING, quote STRING, author STRING, source STRING)");
-     // statement.execute("INSERT INTO users (_id, username, password) VALUES (0 ,'shinobi', 'megatonto1')");
-//INSERT INTO quotes (_id, userid, category, quote, author, source) VALUES (0, 0 ,'romance', 'La peor forma de extrañar a alguien es estar sentado a su lado y saber que nunca lo podrás tener', 'Gabriel García Márquez', 'unknown');
-//INSERT INTO quotes (_id, userid, category, quote, author, source) VALUES (1, 0 ,'terror', 'And the Raven, never flitting, still is sitting, still is sitting On the pallid bust of Pallas just above my chamber door', 'Edgar Allan Poe', 'The raven');
-//INSERT INTO quotes (_id, userid, category, quote, author, source) VALUES (1, 0 ,'terror', 'And the Raven, never flitting, still is sitting, still is sitting On the pallid bust of Pallas just above my chamber door', 'Edgar Allan Poe', 'The raven');
-//INSERT INTO quotes (_id, userid, category, quote, author, source) VALUES (2, 0 ,'scifi', 'ay the Force be with you', 'Obi Wan Kenobi', 'Star Wars');
-//INSERT INTO quotes (_id, userid, category, quote, author, source) VALUES (2, 0 ,'scifi', 'ay the Force be with you', 'Obi Wan Kenobi', 'Star Wars');
-
-
-
-
-      // terror
-      // romance
-      // scifi
-      // fantasy
-      // comedy
-      // mystery
-      // adventure
-      // self
-      // other
-
-
-      return true;
-
-    } catch (SQLException e){
-      System.out.println(e.getMessage());
-      return false;
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-      return false;
+      session.beginTransaction();
+      allUsers = session
+          .createQuery("from User")
+          .getResultList();
+      session.getTransaction().commit();
+    } finally {
+      session.close();
     }
+
   }
 
-  public Connection getConn() {
-    return conn;
+// terror
+  // romance
+  // scifi
+  // fantasy
+  // comedy
+  // mystery
+  // adventure
+  // self
+  // other
+
+  public List<User> getAllUsers() {
+    return allUsers;
   }
 
-  public void setConn(Connection conn) {
-    this.conn = conn;
+  public void setAllUsers(List<User> allUsers) {
+    this.allUsers = allUsers;
   }
 
-  public String getDbName() {
-    return dbName;
+  public User getSingleUser(String username){
+    for(User user : allUsers){
+      if(user.getUsername().equals(username)){
+        return user;
+      }
+    }
+    return null;
   }
 
-  public void setDbName(String dbName) {
-    this.dbName = dbName;
+  public User isRightPassword (String username, String password){
+    User user = getSingleUser(username);
+    if(user != null){
+      if(user.getPassword().equals(password)){
+        return user;
+      }
+    }
+    return null;
   }
+
 }

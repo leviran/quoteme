@@ -13,5 +13,7 @@
     <orderEntry type="library" name="sqlite-jdbc-3.15.1-javadoc" level="project" />
     <orderEntry type="library" name="antlr-2.7.7" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.23" level="project" />
+    <orderEntry type="library" name="hibernate-validator-6.2.0.Final" level="project" />
+    <orderEntry type="library" name="classmate-1.5.1" level="project" />
   </component>
 </module>

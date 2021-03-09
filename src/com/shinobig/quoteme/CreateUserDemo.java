@@ -15,34 +15,38 @@ public class CreateUserDemo {
     Session session = factory.getCurrentSession();
 
     try {
-      System.out.println("creating user");
-     // User testUser = new User("Maria", "maria1");
+
       int theId = 1;
 
-
-      Quote testQuote = new Quote("Le prometió seguirla hasta el fin del mundo, pero más tarde, cuando arreglara sus asuntos, y ella se había cansado de esperarlo identificándolo siempre con los hombres altos y bajos, rubios y morenos…", "romance", "Gabriel García Márquez", "Cien años de soledad", "cien1");
-      Quote testQuoteTwo = new Quote("Sólo tú puedes decidir qué hacer con el tiempo que se te ha dado", "fantasy", " J. R. R. Tolkien", "El Señor de los Anillos", "senor1");
-
-
       session.beginTransaction();
-      User testUser = session.get(User.class, theId);
+      User collectedUser = session.get(User.class, theId);
+      System.out.println("collected user: " + collectedUser.getUsername());
 
-      testUser.add(testQuote);
-      testUser.add(testQuoteTwo);
+      System.out.println("Courses: " + collectedUser.getUserQuotes());
 
+      session.getTransaction().commit();
+      //User testUser = new User("Shinobi", "shinobi1");
+
+
+/*
+      Quote testQuote = new Quote("And the silken, sad, uncertain rustling of each purple curtain Thrilled me—filled me with fantastic terrors never felt before;", "horror", "Edgar Allan Poe", "The Raven", "raven1");
+      Quote testQuoteTwo = new Quote("Ah nigga don't hate me cause I'm beautiful nigga. Maybe if you got rid of that old yee yee ass haircut, you'd get some bitches on yo dick. Oh, better yet, maybe Tanisha'll call your dog ass if she stops fuckin' with that brain surgeon or lawyer she fucking with. Niiggaaa", "comedy", "Lamar", "Grand Teft Auto V", "gta1");
+*/
+//
+//      User testUser = session.get(User.class, theId);
+//
+//      testUser.add(testQuote);
+//      testUser.add(testQuoteTwo);
 
 
       // add quotes to user
 
-      session.save(testQuote);
-      session.save(testQuoteTwo);
+//      session.save(testQuote);
+//      session.save(testQuoteTwo);
+
+//session.save(testUser);
 
 
-
-      session.getTransaction().commit();
-
-
-      System.out.println("user successfully saved");
     } finally {
       session.close();
       factory.close();

@@ -1,6 +1,10 @@
 package com.shinobig.quoteme;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.CheckedOutputStream;
@@ -13,9 +17,13 @@ public class User {
   @Column(name = "id")
   private int id;
 
+  @NotNull
+  @Size(min = 1, message = "Username is required")
   @Column(name = "username")
   private String username;
 
+  @NotNull
+  @Size(min = 1, message = "Password is required")
   @Column(name = "password")
   private String password;
 
