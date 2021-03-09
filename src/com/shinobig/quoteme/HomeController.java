@@ -1,5 +1,6 @@
 package com.shinobig.quoteme;
 
+import com.shinobig.quoteme.model.AllCategories;
 import com.shinobig.quoteme.model.StartingDatabase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,12 +15,18 @@ import javax.validation.Valid;
 public class HomeController {
 
   StartingDatabase startingDatabase;
+  AllCategories allCategories;
 
   public HomeController() {
   }
 
   public HomeController(StartingDatabase startingDatabase) {
     this.startingDatabase = startingDatabase;
+  }
+
+  public HomeController(StartingDatabase startingDatabase, AllCategories allCategories) {
+    this.startingDatabase = startingDatabase;
+    this.allCategories = allCategories;
   }
 
   @RequestMapping("/")
@@ -31,9 +38,12 @@ public class HomeController {
 
   @RequestMapping("/myQuotes")
   public String myQuotes(
-      @Valid @ModelAttribute("user") User theUser,
-      BindingResult theBindingResult, Model testModel) {
-
+      @Valid @ModelAttribute("user")
+          User theUser,
+      BindingResult theBindingResult,
+      Model testModel,
+      Model allCategories
+  ) {
     if (theBindingResult.hasErrors()) {
       return "index";
     } else if (startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword()) == null) {
@@ -41,8 +51,19 @@ public class HomeController {
     } else {
       User currentUser = startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword());
       testModel.addAttribute("currentUser", currentUser);
+      allCategories.addAttribute("allCategories", this.allCategories);
       return "my-quotes";
     }
+
+  }
+
+  @RequestMapping("/testing-user")
+  public String testingUser(Model testModel, Model allCategories){
+    User testUser = startingDatabase.getSingleUser("Shinobi");
+    testModel.addAttribute("currentUser", testUser);
+    allCategories.addAttribute("allCategories", this.allCategories);
+
+    return "my-quotes";
 
   }
 

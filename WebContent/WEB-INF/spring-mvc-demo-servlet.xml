@@ -26,11 +26,13 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-    <bean class="com.shinobig.quoteme.model.StartingDatabase" id="startingDatabase">
-    </bean>
+    <bean class="com.shinobig.quoteme.model.StartingDatabase" id="startingDatabase" />
+
+    <bean class="com.shinobig.quoteme.model.AllCategories" id="allCategories" />
 
     <bean class="com.shinobig.quoteme.HomeController"  id="homeController">
         <constructor-arg ref="startingDatabase" />
+        <constructor-arg ref="allCategories" />
     </bean>
 </beans>
 

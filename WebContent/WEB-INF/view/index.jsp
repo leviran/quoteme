@@ -22,5 +22,9 @@ Password: <form:input path="password"/>
 <input type="submit" value="Submit" />
 </form:form>
 
+<br />
+<br />
+<a href="/quoteme/testing-user" >Test here</a>
+
 </body>
 </html>
