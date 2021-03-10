@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
-  StartingDatabase startingDatabase;
-  AllCategories allCategories;
+  private StartingDatabase startingDatabase;
+  private AllCategories allCategories;
+  private List<Quote> displayedQuotes;
 
   public HomeController() {
   }
@@ -42,7 +44,8 @@ public class HomeController {
           User theUser,
       BindingResult theBindingResult,
       Model testModel,
-      Model allCategories
+      Model allCategories,
+      Model displayedQuotes
   ) {
     if (theBindingResult.hasErrors()) {
       return "index";
@@ -50,18 +53,22 @@ public class HomeController {
       return "index";
     } else {
       User currentUser = startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword());
+      this.displayedQuotes = currentUser.getUserQuotes();
       testModel.addAttribute("currentUser", currentUser);
       allCategories.addAttribute("allCategories", this.allCategories);
+      displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
       return "my-quotes";
     }
 
   }
 
   @RequestMapping("/testing-user")
-  public String testingUser(Model testModel, Model allCategories){
+  public String testingUser(Model testModel, Model allCategories, Model displayedQuotes){
     User testUser = startingDatabase.getSingleUser("Shinobi");
+    this.displayedQuotes = testUser.getUserQuotes();
     testModel.addAttribute("currentUser", testUser);
     allCategories.addAttribute("allCategories", this.allCategories);
+    displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
 
     return "my-quotes";
 
