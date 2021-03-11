@@ -55,20 +55,31 @@ public class HomeController {
       User currentUser = startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword());
       this.displayedQuotes = currentUser.getUserQuotes();
       testModel.addAttribute("currentUser", currentUser);
+      testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + currentUser.getUsername());
       allCategories.addAttribute("allCategories", this.allCategories);
       displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
+
+      for (Quote quote : this.displayedQuotes) {
+        quote.setMainColors(quote.getCategory());
+      }
       return "my-quotes";
     }
 
   }
 
   @RequestMapping("/testing-user")
-  public String testingUser(Model testModel, Model allCategories, Model displayedQuotes){
+  public String testingUser(Model testModel, Model allCategories, Model displayedQuotes) {
     User testUser = startingDatabase.getSingleUser("Shinobi");
     this.displayedQuotes = testUser.getUserQuotes();
     testModel.addAttribute("currentUser", testUser);
+    testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + testUser.getUsername());
     allCategories.addAttribute("allCategories", this.allCategories);
     displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
+
+    for (Quote quote : this.displayedQuotes) {
+      quote.setMainColors(quote.getCategory());
+    }
+
 
     return "my-quotes";
 

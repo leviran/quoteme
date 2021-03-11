@@ -35,6 +35,10 @@
         <constructor-arg ref="startingDatabase" />
         <constructor-arg ref="allCategories" />
     </bean>
+
+    <bean class="com.shinobig.quoteme.AddNewQuoteController" id="addNewQuoteController">
+        <constructor-arg ref="startingDatabase" />
+    </bean>
 </beans>
 
 

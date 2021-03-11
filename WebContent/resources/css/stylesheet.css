@@ -1,3 +1,14 @@
 body{
     background-color: #d7ccc8;
 }
+
+.quote-container{
+    background-color: #efebe9;
+}
+
+.quote-main-holder{
+    margin-bottom: 1em;
+    border-radius: 10px;
+    padding: 1em;
+    box-shadow: 5px 4px 6px -1px #A1887F;
+}
