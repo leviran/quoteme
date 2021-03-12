@@ -1,14 +1,57 @@
 body{
-    background-color: #d7ccc8;
+    background-color: #99A680;
 }
 
 .quote-container{
-    background-color: #efebe9;
+    background-color: white;
+    padding: 2% 7% 1% 7%;
+    margin-bottom: 15px;
+}
+
+.menu-bar{
+    background-color: #F8F2EF;
 }
 
 .quote-main-holder{
     margin-bottom: 1em;
     border-radius: 10px;
-    padding: 1em;
+    padding: 1em 3em;
     box-shadow: 5px 4px 6px -1px #A1887F;
+}
+
+
+/* <!-- category and buttons --> */
+.terror-tag-holder{
+    
+}
+
+
+.terror-btn{
+    color: #311b92; 
+    border: 1px solid #311b92;
+    background-color: #d1c4e9;
+        min-width: 170px;
+    font-size: 13px;
+    transition: 0.3s;
+    padding:5px 20px 5px 20px;   
+    
+}
+
+.terror-btn:hover{
+    color: white; 
+    border: 1px solid #311b92;
+    background-color: #311b92;
+        min-width: 170px;
+    font-size: 13px;
+    transition: 0.3s;
+    padding:5px 20px 5px 20px;
+}
+.terror-btn:focus{
+    color: white; 
+    border: 1px solid #311b92;
+    background-color: #311b92;
+        min-width: 170px;
+    font-size: 13px;
+    transition: 0.3s;
+    padding:5px 20px 5px 20px;
 }

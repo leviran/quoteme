@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -53,7 +54,12 @@ public class HomeController {
       return "index";
     } else {
       User currentUser = startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword());
-      this.displayedQuotes = currentUser.getUserQuotes();
+      if(currentUser.getUserQuotes().size() > 0){
+        this.displayedQuotes = currentUser.getUserQuotes();
+      } else {
+        this.displayedQuotes = new ArrayList<>();
+      }
+
       testModel.addAttribute("currentUser", currentUser);
       testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + currentUser.getUsername());
       allCategories.addAttribute("allCategories", this.allCategories);

@@ -1,5 +1,6 @@
 package com.shinobig.quoteme;
 
+import com.shinobig.quoteme.model.AllCategories;
 import com.shinobig.quoteme.model.StartingDatabase;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 public class AddNewQuoteController {
 
   private StartingDatabase startingDatabase;
+  private AllCategories allCategories;
   private String username;
 
   public AddNewQuoteController() {
@@ -23,6 +25,11 @@ public class AddNewQuoteController {
 
   public AddNewQuoteController(StartingDatabase startingDatabase) {
     this.startingDatabase = startingDatabase;
+  }
+
+  public AddNewQuoteController(StartingDatabase startingDatabase, AllCategories allCategories) {
+    this.startingDatabase = startingDatabase;
+    this.allCategories = allCategories;
   }
 
   @RequestMapping(value = "/form", method = RequestMethod.GET)
@@ -33,6 +40,7 @@ public class AddNewQuoteController {
     Quote newQuoteToAdd = new Quote();
     quoteModel.addAttribute("newQuoteToAdd", newQuoteToAdd);
     quoteModel.addAttribute("user", actualUser);
+    quoteModel.addAttribute("categories", allCategories.getAllCategoriesMap());
 
 
     return "new-quote";
@@ -42,20 +50,17 @@ public class AddNewQuoteController {
   public String quoteSaved(@Valid @ModelAttribute("newQuoteToAdd") Quote newQuoteToAdd,
                            BindingResult theBindingResult,
                            Model savedQuoteModel) {
-
     // Check if quote exists
     System.out.println("saving new quote");
 
     // Save new quote
-    //Quote quoteToAdd = new Quote("this is a testing quote no 3", "other", "Oscar Wilde", "Dorian Gray", "Dorian1");
+    String title = newQuoteToAdd.getQuote().split(" ")[0];
+    title = title + newQuoteToAdd.getAuthor() + "1";
+    newQuoteToAdd.setTitle(title);
+
     startingDatabase.addNewQuoteByUser(this.username, newQuoteToAdd);
 
-
-
-    // Display new information
-
     savedQuoteModel.addAttribute("savedQuote", newQuoteToAdd);
-
 
     return "successfully-saved";
   }

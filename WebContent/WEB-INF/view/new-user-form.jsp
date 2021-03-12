@@ -4,15 +4,13 @@
         <html>
             <head>
                 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-                <!--  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/stylesheet.css"> -->
+                <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/stylesheet.css">
                 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
             </head>
             <body>
-                <h1>hola, soy quoteme</h1>
+                <h1>Add new user</h1>
 
-                <h1>Login aqui</h1>
-
-                <form:form action="myQuotes" modelAttribute="user">
+                <form:form action="newusercreated" modelAttribute="user">
                     Username: <form:input path="username"/>
                     <form:errors path="username" />
                     <br /><br />
@@ -21,13 +19,5 @@
                     <br /><br />
                     <input type="submit" value="Submit" />
                 </form:form>
-                <br />
-                <br />
-                <a href="/quoteme/newuser/createnewuser" >Create new user</a>
-
-                <br />
-                <br />
-                <a href="/quoteme/testing-user" >Test here</a>
-
             </body>
         </html>

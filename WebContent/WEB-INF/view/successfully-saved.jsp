@@ -13,8 +13,9 @@
             <body>
                 <div class="container">
                     <div class="row">
-<h1>successfully saved quote</h1>
-                        <a href="/quoteme/testing-user">Return to my quotes</a>
+                        <h1>successfully saved quote</h1>
+                        <h1>${savedQuote.author}</h1>
+                        <a href="/quoteme/myQuotes">Return to my quotes</a>
                     </div>
                 </div>
             </body>

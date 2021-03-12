@@ -17,15 +17,20 @@
                         <div class="col-md-8 offset-md-2">
                             <form:form action="quotesaved" modelAttribute="newQuoteToAdd">
                                 Quote: <form:textarea path="quote"  />
-                                category: <form:input path="category" />
+                                
+                                <br>
                                 author: <form:input path="author"  />
+                                <br>
                                 source: <form:input path="source"  />
-                                title: <form:input path="title"  />
+                                <br>
+
+                                Country: <form:select path="category">
+                                <form:options items="${categories}" />
+                                </form:select>
+
                                 <input type="submit" value="Save new quote" />
                             </form:form>
-
                         </div>
-
                     </div>
                 </div>
             </body>

@@ -43,6 +43,25 @@ public class StartingDatabase {
     this.allUsers = allUsers;
   }
 
+  public boolean createNewUser(User newUserToAdd){
+
+    if(getSingleUser(newUserToAdd.getUsername()) != null){
+      return false;
+    } else {
+      Session session = factory.getCurrentSession();
+      try {
+        session.beginTransaction();
+       session.save(newUserToAdd);
+        session.getTransaction().commit();
+        System.out.println("User successfully saved");
+
+      } finally {
+        session.close();
+        return true;
+      }
+    }
+
+  }
 
   public User getSingleUser(String username) {
     for (User user : allUsers) {
@@ -88,13 +107,10 @@ public class StartingDatabase {
     } else {
       return false;
     }
-
-
   }
 
 
   public boolean doesQuoteAlreadyExists(User user, Quote quoteToCheck) {
-
     List<Quote> userQuotes = user.getUserQuotes();
     for (Quote quote : userQuotes) {
       if (quoteToCheck.getQuote().equals(quote.getQuote())) {
