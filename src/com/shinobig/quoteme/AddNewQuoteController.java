@@ -42,7 +42,6 @@ public class AddNewQuoteController {
     quoteModel.addAttribute("user", actualUser);
     quoteModel.addAttribute("categories", allCategories.getAllCategoriesMap());
 
-
     return "new-quote";
   }
 

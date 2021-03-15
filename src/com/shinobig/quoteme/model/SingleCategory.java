@@ -10,8 +10,8 @@ public class SingleCategory {
 
   public SingleCategory(String categoryName) {
     this.categoryName = categoryName;
-    this.categoryLink = categoryName;
     this.testLink = "testing-user/" + categoryName;
+    this.categoryLink = "?category=" + categoryName;
   }
 
   public String getCategoryName() {

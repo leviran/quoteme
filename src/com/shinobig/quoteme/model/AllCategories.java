@@ -20,6 +20,7 @@ private LinkedHashMap<String, String> allCategoriesMap;
     SingleCategory adventure = new SingleCategory("adventure");
     SingleCategory self = new SingleCategory("self");
     SingleCategory other = new SingleCategory("other");
+    SingleCategory all = new SingleCategory("all");
 
     allCategories = new ArrayList<>();
     allCategories.add(terror);
@@ -31,6 +32,7 @@ private LinkedHashMap<String, String> allCategoriesMap;
     allCategories.add(adventure);
     allCategories.add(self);
     allCategories.add(other);
+    allCategories.add(all);
 
     allCategoriesMap = new LinkedHashMap<>();
 
@@ -43,6 +45,7 @@ private LinkedHashMap<String, String> allCategoriesMap;
     allCategoriesMap.put("adventure", "Adventure");
     allCategoriesMap.put("self", "Self Improvement");
     allCategoriesMap.put("other", "Other");
+    allCategoriesMap.put("all", "All");
   }
 
   public List<SingleCategory> getAllCategories() {

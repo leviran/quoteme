@@ -15,7 +15,7 @@
                     <div class="col-md-4 menu-bar">
                         <c:forEach var="category" items="${allCategories.allCategories}">
                             <div class="col-md-12">
-                                <a href="${category.testLink}">
+                                <a href="${category.categoryLink}">
                                     ${category.categoryName}
                                 </a>
                             </div>

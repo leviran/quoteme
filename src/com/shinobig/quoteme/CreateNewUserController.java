@@ -26,22 +26,12 @@ public class CreateNewUserController {
   public String createNewUser(Model model) {
     User user = new User();
     model.addAttribute("user", user);
-
     return "new-user-form";
   }
 
   @RequestMapping("/newusercreated")
   public String newUserCreated(
       @Valid @ModelAttribute("user") User theUser, BindingResult theBindingResult) {
-
-    // connect beans --listo
-
-    // create form and bind it
-
-
-    // check if form is working
-
-    // connect form with database
     if (theBindingResult.hasErrors()) {
       return "new-user-form";
     } else if (startingDatabase.createNewUser(theUser)) {
@@ -49,13 +39,5 @@ public class CreateNewUserController {
     } else {
       return "new-user-form";
     }
-
-    // check if user already exists
-
-    //save user
-
-
   }
-
-
 }

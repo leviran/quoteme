@@ -7,6 +7,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -39,8 +41,9 @@ public class HomeController {
     return "index";
   }
 
-  @RequestMapping("/myQuotes")
+  @RequestMapping(value = "/myQuotes", method = RequestMethod.GET)
   public String myQuotes(
+      @RequestParam("category") String category,
       @Valid @ModelAttribute("user")
           User theUser,
       BindingResult theBindingResult,
@@ -55,7 +58,7 @@ public class HomeController {
     } else {
       User currentUser = startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword());
       if(currentUser.getUserQuotes().size() > 0){
-        this.displayedQuotes = currentUser.getUserQuotes();
+        this.displayedQuotes = currentUser.filterQuotes(category);
       } else {
         this.displayedQuotes = new ArrayList<>();
       }
@@ -73,22 +76,32 @@ public class HomeController {
 
   }
 
-  @RequestMapping("/testing-user")
-  public String testingUser(Model testModel, Model allCategories, Model displayedQuotes) {
+  @RequestMapping(value = "/testing-user", method = RequestMethod.GET)
+  public String testingUser(@RequestParam("category") String category, Model testModel, Model allCategories, Model displayedQuotes) {
+
     User testUser = startingDatabase.getSingleUser("Shinobi");
-    this.displayedQuotes = testUser.getUserQuotes();
+    this.displayedQuotes = testUser.filterQuotes(category);
     testModel.addAttribute("currentUser", testUser);
     testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + testUser.getUsername());
     allCategories.addAttribute("allCategories", this.allCategories);
     displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
 
+    // agregar links
+
+    // recibir links con argumentos
+
+
+
+    // filtrar displayedquotes
+
+    //mostrar quotes
+
+
+
     for (Quote quote : this.displayedQuotes) {
       quote.setMainColors(quote.getCategory());
     }
-
-
     return "my-quotes";
-
   }
 
 

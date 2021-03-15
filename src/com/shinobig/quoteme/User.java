@@ -83,4 +83,19 @@ public class User {
     userQuotes.add(quoteToAdd);
     quoteToAdd.setUser(this);
   }
+
+  public List<Quote> filterQuotes(String category){
+    List<Quote> filteredList = new ArrayList<>();
+
+    if(category.equals("all")){
+      return this.userQuotes;
+    } else {
+      for(Quote quote : this.userQuotes){
+        if(quote.getCategory().equals(category)){
+          filteredList.add(quote);
+        }
+      }
+      return filteredList;
+    }
+  }
 }

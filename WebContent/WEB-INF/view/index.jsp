@@ -27,7 +27,7 @@
 
                 <br />
                 <br />
-                <a href="/quoteme/testing-user" >Test here</a>
+                <a href="/quoteme/testing-user?category=all" >Test here</a>
 
             </body>
         </html>
