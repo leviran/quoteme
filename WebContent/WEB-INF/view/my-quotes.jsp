@@ -34,7 +34,7 @@
                                         ${quote.category}
                                     </div>
                                     <div class="col-md-6">
-                                        editar y cerrar
+                                        <a href="${quote.editQuoteLink}">editar</a> y borrar
                                     </div>
                                 </div>
                                 <div class="row">

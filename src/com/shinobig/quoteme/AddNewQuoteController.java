@@ -19,6 +19,8 @@ public class AddNewQuoteController {
   private StartingDatabase startingDatabase;
   private AllCategories allCategories;
   private String username;
+  private int quoteId;
+  private User actualUser;
 
   public AddNewQuoteController() {
   }
@@ -33,12 +35,28 @@ public class AddNewQuoteController {
   }
 
   @RequestMapping(value = "/form", method = RequestMethod.GET)
-  public String newQuote(@RequestParam("username") String username, Model quoteModel) {
+  public String newQuote(@RequestParam("username") String username, @RequestParam("quoteid") int quoteId, Model quoteModel) {
 
-    User actualUser = startingDatabase.getSingleUser(username);
+
+    actualUser = startingDatabase.getSingleUser(username);
     this.username = username;
-    Quote newQuoteToAdd = new Quote();
-    quoteModel.addAttribute("newQuoteToAdd", newQuoteToAdd);
+    Quote quoteToEdit = new Quote();
+    quoteModel.addAttribute("quotePlaceholder", "");
+    quoteModel.addAttribute("authorPlaceholder", "");
+    quoteModel.addAttribute("sourcePlaceholder", "");
+    this.quoteId = 0;
+
+    System.out.println(quoteId);
+
+    if (quoteId != 0) {
+      quoteToEdit = actualUser.getSingleQuote(quoteId);
+      quoteModel.addAttribute("quotePlaceholder", quoteToEdit.getQuote());
+      quoteModel.addAttribute("authorPlaceholder", quoteToEdit.getAuthor());
+      quoteModel.addAttribute("sourcePlaceholder", quoteToEdit.getSource());
+      this.quoteId = quoteId;
+    }
+
+    quoteModel.addAttribute("newQuoteToAdd", quoteToEdit);
     quoteModel.addAttribute("user", actualUser);
     quoteModel.addAttribute("categories", allCategories.getAllCategoriesMap());
 
@@ -49,15 +67,19 @@ public class AddNewQuoteController {
   public String quoteSaved(@Valid @ModelAttribute("newQuoteToAdd") Quote newQuoteToAdd,
                            BindingResult theBindingResult,
                            Model savedQuoteModel) {
-    // Check if quote exists
-    System.out.println("saving new quote");
 
-    // Save new quote
-    String title = newQuoteToAdd.getQuote().split(" ")[0];
-    title = title + newQuoteToAdd.getAuthor() + "1";
-    newQuoteToAdd.setTitle(title);
 
-    startingDatabase.addNewQuoteByUser(this.username, newQuoteToAdd);
+    if (this.quoteId == 0) {
+      System.out.println("saving new quote");
+      String title = newQuoteToAdd.getQuote().split(" ")[0];
+      title = title + newQuoteToAdd.getAuthor() + "1";
+      newQuoteToAdd.setTitle(title);
+      startingDatabase.addNewQuoteByUser(this.username, newQuoteToAdd);
+    } else {
+      System.out.println("editing quote");
+      actualUser.editQuote(newQuoteToAdd, this.quoteId);
+      startingDatabase.editQuoteByUser( newQuoteToAdd, this.quoteId);
+    }
 
     savedQuoteModel.addAttribute("savedQuote", newQuoteToAdd);
 

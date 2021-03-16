@@ -121,4 +121,27 @@ public class StartingDatabase {
   }
 
 
+  public boolean editQuoteByUser(Quote quoteToEdit, int quoteId){
+
+      Session session = factory.getCurrentSession();
+      try {
+        session.beginTransaction();
+        Quote dbQuote = session.get(Quote.class, quoteId);
+
+        dbQuote.setQuote(quoteToEdit.getQuote());
+        dbQuote.setAuthor(quoteToEdit.getAuthor());
+        dbQuote.setSource(quoteToEdit.getSource());
+        dbQuote.setCategory(quoteToEdit.getCategory());
+
+        session.getTransaction().commit();
+
+      } finally {
+        session.close();
+      }
+
+
+    return false;
+
+  }
+
 }

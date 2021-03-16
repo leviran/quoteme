@@ -16,15 +16,17 @@
                         <h1>Aqui iran las nuevas quotes </h1>
                         <div class="col-md-8 offset-md-2">
                             <form:form action="quotesaved" modelAttribute="newQuoteToAdd">
-                                Quote: <form:textarea path="quote"  />
-                                
+
+                                Quote: <textarea id="myTextArea" onchange="here();">${quotePlaceholder}</textarea>
+                                <form:textarea type="hidden" id="quote-text" path="quote"/>
+
                                 <br>
-                                author: <form:input path="author"  />
+                                author: <form:input path="author" value="${authorPlaceholder}" />
                                 <br>
-                                source: <form:input path="source"  />
+                                source: <form:input path="source" value="${sourcePlaceholder}"  />
                                 <br>
 
-                                Country: <form:select path="category">
+                                Category: <form:select path="category">
                                 <form:options items="${categories}" />
                                 </form:select>
 
@@ -33,5 +35,13 @@
                         </div>
                     </div>
                 </div>
+                <script>
+                    var text1 = document.getElementById('myTextArea').value;
+                    document.getElementById("quote-text").value = text1;
+                    function here() {
+                        text1 = document.getElementById('myTextArea').value;
+                        document.getElementById("quote-text").value = text1;
+                    }
+                </script>
             </body>
         </html>

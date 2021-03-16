@@ -41,9 +41,9 @@ public class HomeController {
     return "index";
   }
 
-  @RequestMapping(value = "/myQuotes", method = RequestMethod.GET)
+  @RequestMapping("/myQuotes")
   public String myQuotes(
-      @RequestParam("category") String category,
+      @RequestParam(value = "category", required = false) String category,
       @Valid @ModelAttribute("user")
           User theUser,
       BindingResult theBindingResult,
@@ -51,6 +51,15 @@ public class HomeController {
       Model allCategories,
       Model displayedQuotes
   ) {
+
+    String fixedCategory;
+
+    if(category == null){
+      fixedCategory = "all";
+    } else {
+      fixedCategory = category;
+    }
+
     if (theBindingResult.hasErrors()) {
       return "index";
     } else if (startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword()) == null) {
@@ -58,18 +67,22 @@ public class HomeController {
     } else {
       User currentUser = startingDatabase.isRightPassword(theUser.getUsername(), theUser.getPassword());
       if(currentUser.getUserQuotes().size() > 0){
-        this.displayedQuotes = currentUser.filterQuotes(category);
+
+        this.displayedQuotes = currentUser.filterQuotes(fixedCategory);
       } else {
         this.displayedQuotes = new ArrayList<>();
       }
 
       testModel.addAttribute("currentUser", currentUser);
-      testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + currentUser.getUsername());
+      testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + currentUser.getUsername() + "&quoteid=" + 0);
       allCategories.addAttribute("allCategories", this.allCategories);
       displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
 
+
       for (Quote quote : this.displayedQuotes) {
         quote.setMainColors(quote.getCategory());
+        String editQuoteLink = "newQuote/form?username=" + currentUser.getUsername() + "&quoteid=" + quote.getId();
+        quote.setEditQuoteLink(editQuoteLink);
       }
       return "my-quotes";
     }
@@ -82,24 +95,15 @@ public class HomeController {
     User testUser = startingDatabase.getSingleUser("Shinobi");
     this.displayedQuotes = testUser.filterQuotes(category);
     testModel.addAttribute("currentUser", testUser);
-    testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + testUser.getUsername());
+    testModel.addAttribute("addNewQuoteLink", "newQuote/form?username=" + testUser.getUsername() + "&quoteid=" + 0);
     allCategories.addAttribute("allCategories", this.allCategories);
     displayedQuotes.addAttribute("displayedQuotes", this.displayedQuotes);
-
-    // agregar links
-
-    // recibir links con argumentos
-
-
-
-    // filtrar displayedquotes
-
-    //mostrar quotes
-
 
 
     for (Quote quote : this.displayedQuotes) {
       quote.setMainColors(quote.getCategory());
+      String editQuoteLink = "newQuote/form?username=" + testUser.getUsername() + "&quoteid=" + quote.getId();
+      quote.setEditQuoteLink(editQuoteLink);
     }
     return "my-quotes";
   }

@@ -47,12 +47,16 @@ public class Quote {
   @Transient
   private String mainColor;
 
+  @Transient
+  private String editQuoteLink;
+
   @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
   @JoinColumn(name="user_id")
   private User user;
 
   public Quote() {
   }
+
 
   public Quote(String quote, String category, String author, String source, String title) {
     this.quote = quote;
@@ -138,6 +142,15 @@ public class Quote {
 
   public void setMainColor(String mainColor) {
     this.mainColor = mainColor;
+  }
+
+
+  public String getEditQuoteLink() {
+    return editQuoteLink;
+  }
+
+  public void setEditQuoteLink(String editQuoteLink) {
+    this.editQuoteLink = editQuoteLink;
   }
 
   public void setMainColors(String category){

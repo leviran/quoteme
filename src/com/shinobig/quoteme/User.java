@@ -98,4 +98,21 @@ public class User {
       return filteredList;
     }
   }
+
+  public Quote getSingleQuote(int id){
+    for(Quote quote : this.userQuotes){
+      if(quote.getId() == id){
+        return quote;
+      }
+    }
+    return null;
+  }
+
+  public void editQuote(Quote newValues, int quoteId){
+    Quote quoteToEdit = getSingleQuote(quoteId);
+    quoteToEdit.setQuote(newValues.getQuote());
+    quoteToEdit.setAuthor(newValues.getAuthor());
+    quoteToEdit.setSource(newValues.getSource());
+    quoteToEdit.setCategory(newValues.getCategory());
+  }
 }
